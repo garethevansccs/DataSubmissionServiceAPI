@@ -80,6 +80,7 @@ class Admin::FrameworksController < AdminController
 
   def archive_confirmation; end
 
+  # rubocop:disable Metrics/AbcSize
   def archive
     @framework.errors.clear
 
@@ -96,6 +97,7 @@ class Admin::FrameworksController < AdminController
 
     redirect_to admin_framework_path(@framework)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def unarchive_confirmation; end
 
