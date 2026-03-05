@@ -81,12 +81,19 @@ class Admin::FrameworksController < AdminController
   def archive_confirmation; end
 
   def archive
-    if @framework.can_be_archived?
-      @framework.archive!
+    @framework.errors.clear
+
+    unless @framework.can_be_archived?
+      flash[:failure] = @framework.errors.full_messages.to_sentence
+      return redirect_to admin_framework_path(@framework)
+    end
+
+    if @framework.archive
       flash[:success] = 'Framework archived successfully.'
     else
-      flash[:failure] = 'Framework cannot be archived. Ensure it is published and has no active agreements.'
+      flash[:failure] = @framework.errors.full_messages.to_sentence.presence || 'Error archiving framework.'
     end
+
     redirect_to admin_framework_path(@framework)
   end
 
