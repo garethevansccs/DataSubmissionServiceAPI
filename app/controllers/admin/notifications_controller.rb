@@ -22,9 +22,7 @@ class Admin::NotificationsController < AdminController
   end
 
   def create
-    @notification = Notification.new(summary: notification_params[:summary],
-                                     notification_message: notification_params[:notification_message],
-                                     user: current_user['email'], published: true, published_at: Time.zone.now)
+    @notification = create_notifications
     Notification.transaction do
       if @notification.save
         flash[:success] = 'Notification created successfully.'
@@ -55,6 +53,15 @@ class Admin::NotificationsController < AdminController
   private
 
   def notification_params
-    params.require(:notification).permit(:summary, :notification_message)
+    params.require(:notification).permit(:summary, :notification_message, :stop_datetime)
+  end
+
+  def create_notifications
+    Notification.new(summary: notification_params[:summary],
+                     notification_message: notification_params[:notification_message],
+                     user: current_user['email'],
+                     published: true,
+                     published_at: Time.zone.now,
+                     stop_datetime: notification_params[:stop_datetime])
   end
 end
