@@ -45,5 +45,5 @@ RSpec.describe 'Admin archives a framework', type: :request do
       expect(response.body).to include('Framework cannot be archived while it has active agreements')
       expect(framework.reload.aasm_state).to eq('published')
     end
-  end 
+  end
 end
