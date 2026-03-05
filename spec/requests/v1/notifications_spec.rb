@@ -35,7 +35,6 @@ RSpec.describe '/v1' do
       FactoryBot.create(:notification, published: true, summary: 'Testy McTestface',
                         notification_message: 'The answer is 42')
 
-      # 2. Wrap this in ClimateControl so the server can verify the password
       ClimateControl.modify API_PASSWORD: 'sdfhg' do
         get '/v1/notifications', headers: auth_headers
 
