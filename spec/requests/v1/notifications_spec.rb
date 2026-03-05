@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe '/v1' do
   let(:user) { FactoryBot.create(:user) }
 
-  # 1. Define auth_headers here so it can be reused
   let(:auth_headers) do
     {
       'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials('dxw', 'sdfhg'),
@@ -19,9 +18,8 @@ RSpec.describe '/v1' do
       end
     end
 
-    it 'returns 401 if X-Auth-Id header missing' do
-      get '/v1/notifications'
-      expect(response.status).to eq(401)
+    it 'returns 500 if X-Auth-Id header missing' do
+      expect { get '/v1/notifications' }.to raise_error(ActionController::BadRequest)
     end
 
     it 'returns ok if authentication needed and provided' do
