@@ -89,10 +89,10 @@ class Admin::FrameworksController < AdminController
       return redirect_to admin_framework_path(@framework)
     end
 
-    if @framework.archive
+    if @framework.archive!
       flash[:success] = 'Framework archived successfully.'
     else
-      flash[:failure] = @framework.errors.full_messages.to_sentence.presence || 'Error archiving framework.'
+      flash[:failure] = 'Error archiving framework: FDL does not pass validation.'
     end
 
     redirect_to admin_framework_path(@framework)
