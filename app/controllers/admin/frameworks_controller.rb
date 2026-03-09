@@ -80,7 +80,6 @@ class Admin::FrameworksController < AdminController
 
   def archive_confirmation; end
 
-  # rubocop:disable Metrics/AbcSize
   def archive
     @framework.errors.clear
 
@@ -89,15 +88,14 @@ class Admin::FrameworksController < AdminController
       return redirect_to admin_framework_path(@framework)
     end
 
-    if @framework.archive
+    if @framework.archive!
       flash[:success] = 'Framework archived successfully.'
     else
-      flash[:failure] = @framework.errors.full_messages.to_sentence.presence || 'Error archiving framework.'
+      flash[:failure] = 'Error archiving framework: FDL does not pass validation.'
     end
 
     redirect_to admin_framework_path(@framework)
   end
-  # rubocop:enable Metrics/AbcSize
 
   def unarchive_confirmation; end
 
