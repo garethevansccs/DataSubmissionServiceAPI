@@ -108,6 +108,8 @@ class Framework < ApplicationRecord
   end
 
   def can_be_archived?
-    published? && agreements.active.none?
+    errors.add(:base, 'Framework must be published to be archived') unless published?
+    errors.add(:base, 'Framework cannot be archived while it has active agreements') unless agreements.active.none?
+    errors.empty?
   end
 end
