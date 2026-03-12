@@ -7,14 +7,17 @@ import { StreamLanguage } from "@codemirror/language";
 import { ruby as rubyLegacy} from "@codemirror/legacy-modes/mode/ruby";
 
 export function initializeCodeMirror(textAreaId) {
-    const textArea = document.getElementById('code-editor');
+    const textArea = document.getElementById(textAreaId);
     if (!textArea) return;
 
     const extensions = [
         lineNumbers(),
         keymap.of(defaultKeymap),
         StreamLanguage.define(rubyLegacy),
-        oneDark
+        oneDark,
+        EditorView.contentAttributes.of({
+            "aria-label": textArea.getAttribute('aria-label') || "FDL editor"
+        })
     ];
 
     if (textArea.hasAttribute('readonly')) {
@@ -28,7 +31,7 @@ export function initializeCodeMirror(textAreaId) {
 
     const view = new EditorView({
         state,
-        parent: textArea.parentElement
+        parent: textArea.parentElement,
     });
 
     // Hide the original textarea and update the value before form submission

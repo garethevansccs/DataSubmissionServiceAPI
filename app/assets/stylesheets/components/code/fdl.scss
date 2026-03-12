@@ -24,6 +24,7 @@ textarea.govuk-textarea--fdl-source {
   display: block;
   box-sizing: border-box;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  background-color: #0E0E11;
 }
 
 
@@ -36,6 +37,10 @@ textarea.govuk-textarea--fdl-source {
 .cm-gutters {
   background: inherit;
   border-right: none;
+}
+
+.cm-gutters .cm-gutterElement {
+  background-color: #0E0E11;
 }
 
 .cm-content {
