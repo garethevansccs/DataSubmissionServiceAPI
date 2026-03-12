@@ -31,7 +31,7 @@ export function initializeCodeMirror(textAreaId) {
 
     const view = new EditorView({
         state,
-        parent: textArea.parentElement,
+        parent: textArea.parentElement
     });
 
     // Hide the original textarea and update the value before form submission
