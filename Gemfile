@@ -66,7 +66,7 @@ gem 'rollbar', '~> 3.5', '>= 3.5.1'
 gem 'lograge', '>= 0.14.0'
 # gem 'skylight', '~> 6.0', '>= 6.0.0'
 
-gem 'rubocop', '>= 1.66.0'
+gem 'rubocop', '>= 1.85.0'
 gem 'rubocop-rails', '~> 2.34', '>= 2.34.0'
 
 gem 'progress_bar', require: false
@@ -110,7 +110,7 @@ group :development, :test do
   gem 'dotenv-rails', '>= 3.2.0'
   gem 'factory_bot_rails', '~> 6.5', '>= 6.5.1'
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 8.0', '>= 8.0.0'
+  gem 'rspec-rails', '~> 8.0', '>= 8.0.4'
 end
 
 group :development do
@@ -129,7 +129,7 @@ group :test do
   gem 'jsonapi-rspec', require: false
   gem 'ruby_event_store-rspec'
   gem 'rspec-json_expectations'
-  gem 'shoulda-matchers', '~> 6.0', '>= 6.0.0'
+  gem 'shoulda-matchers', '~> 7.0', '>= 7.0.1'
   gem 'capybara', '~> 3.40', '>= 3.40.0'
   gem 'climate_control'
   gem 'webmock', '>= 3.24.0'
