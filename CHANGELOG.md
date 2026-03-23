@@ -1,5 +1,14 @@
 # Change Log
 
+## [release-175] - 2026-03-23
+
+- NRMI-278: address outdated container package
+- NRMI-39: self-service update user name 
+- NRMI-253: address accessibility issues agreement page
+- NRMI-252: add helpful messaging when archiving fails
+- [Snyk] Upgrade codemirror from 6.0.0 to 6.0.2 
+- [Snyk] Security upgrade aws-sdk-s3 from 1.112.0 to 1.208.0 
+
 ## [release-174] - 2026-02-02
 
 - NRMI-257: address deadlock error 
@@ -1155,6 +1164,7 @@ this should have been released in release 45 but wasn't actually merged
 
 Initial release
 
+[release-175]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-174...release-175
 [release-174]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-173...release-174
 [release-173]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-172...release-173
 [release-172]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-171...release-172
