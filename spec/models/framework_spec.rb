@@ -171,4 +171,26 @@ RSpec.describe Framework do
       expect(framework.definition).to eq(framework.definition)
     end
   end
+
+  describe '#can_be_archived?' do
+    let(:framework) { create(:framework) }
+
+    context 'when not published' do
+      before { framework.update(aasm_state: 'new') }
+
+      it 'returns false and adds an error' do
+        expect(framework.can_be_archived?).to eq(false)
+        expect(framework.errors[:base]).to include('Framework must be published to be archived')
+      end
+    end
+
+    context 'when published and has no active agreements' do
+      before { framework.update(aasm_state: 'published') }
+
+      it 'returns true' do
+        expect(framework.can_be_archived?).to eq(true)
+        expect(framework.errors[:base]).to be_empty
+      end
+    end
+  end
 end
