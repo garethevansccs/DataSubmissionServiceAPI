@@ -15,9 +15,8 @@ class Admin::UrnListsController < AdminController
     if @urn_list.save
       UrnListImporterJob.perform_later(@urn_list)
 
-      return redirect_to admin_urn_lists_path
+      redirect_to admin_urn_lists_path
     end
-
   rescue ActionController::ParameterMissing
     redirect_to new_admin_urn_list_path, alert: 'Please choose a file to upload'
   end
