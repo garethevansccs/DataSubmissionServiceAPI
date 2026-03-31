@@ -18,7 +18,8 @@ class Admin::UrnListsController < AdminController
       return redirect_to admin_urn_lists_path
     end
 
-    render action: :new
+  rescue ActionController::ParameterMissing
+    redirect_to new_admin_urn_list_path, alert: 'Please choose a file to upload'
   end
 
   def download
