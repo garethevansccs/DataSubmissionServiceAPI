@@ -1,5 +1,11 @@
 # Change Log
 
+## [release-176] - 2026-03-31
+
+- NRMI-258: GCA header and footer updates
+- NRMI-294: fix contrast issue on mobile
+- NRMI-319: fix sidekiq issue
+
 ## [release-175] - 2026-03-23
 
 - NRMI-278: address outdated container package
@@ -1164,6 +1170,7 @@ this should have been released in release 45 but wasn't actually merged
 
 Initial release
 
+[release-176]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-175...release-176
 [release-175]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-174...release-175
 [release-174]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-173...release-174
 [release-173]: https://github.com/Crown-Commercial-Service/DataSubmissionServiceAPI/compare/release-172...release-173
