@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0', '>= 8.0.4'
+gem 'rails', '~> 8.1', '>= 8.1.2.1'
 
 # State machine
 gem 'aasm'
@@ -103,6 +103,8 @@ gem 'nokogiri', '>= 1.18.9'
 gem 'net-http', '>= 0.4.0'
 
 gem 'sprockets-rails', '>= 3.5.1'
+
+gem 'connection_pool', '< 3'
 
 group :development, :test do
   gem 'brakeman', require: false
