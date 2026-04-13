@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0', '>= 8.0.4'
+gem 'rails', '~> 8.1', '>= 8.1.2.1'
 
 # State machine
 gem 'aasm'
@@ -44,7 +44,7 @@ gem 'redcarpet', '~> 3.6'
 gem 'auth0', '~> 5.1', '>= 5.1.2', require: false
 
 # Google Login
-gem 'omniauth-google-oauth2', '>= 1.2.0'
+gem 'omniauth-google-oauth2', '>= 1.2.2'
 gem 'omniauth-rails_csrf_protection', '~> 2.0', '>= 2.0.0'
 
 # Admin Frontend
@@ -113,7 +113,7 @@ group :development, :test do
   gem 'dotenv-rails', '>= 3.2.0'
   gem 'factory_bot_rails', '~> 6.5', '>= 6.5.1'
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 8.0', '>= 8.0.0'
+  gem 'rspec-rails', '~> 8.0', '>= 8.0.4'
 end
 
 group :development do
@@ -132,7 +132,7 @@ group :test do
   gem 'jsonapi-rspec', require: false
   gem 'ruby_event_store-rspec'
   gem 'rspec-json_expectations'
-  gem 'shoulda-matchers', '~> 6.0', '>= 6.0.0'
+  gem 'shoulda-matchers', '~> 7.0', '>= 7.0.1'
   gem 'capybara', '~> 3.40', '>= 3.40.0'
   gem 'climate_control'
   gem 'webmock', '>= 3.24.0'
