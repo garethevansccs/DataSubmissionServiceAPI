@@ -2,7 +2,7 @@ require 'notifications/client'
 
 class Notify
   def initialize
-    @client = Notifications::Client.new(ENV['GOVUK_NOTIFY_API_KEY'])
+    @client = Notifications::Client.new(ENV['GOV_NOTIFY_API_KEY'])
   end
 
   def send_email(template_id:, email:, vars: {})

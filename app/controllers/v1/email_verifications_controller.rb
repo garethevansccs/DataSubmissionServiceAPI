@@ -11,8 +11,9 @@ module V1
       if verification_request.save
 
         SendEmailVerificationJob.perform_later(
-          email: new_email,
-          verification_url: verification_request.verification_url
+          new_email: new_email,
+          verification_url: verification_request.verification_url,
+          person_name: user.name
         )
 
         render jsonapi: verification_request, status: :ok, context: { request: request }

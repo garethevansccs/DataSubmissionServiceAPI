@@ -31,8 +31,9 @@ class V1::UsersController < ApiController
 
     if verification_request.save
       notify_result = SendEmailVerificationJob.perform_later(
-        email: new_email,
-        verification_url: verification_request.verification_url
+        new_email: new_email,
+        verification_url: verification_request.verification_url,
+        person_name: user.name
       )
 
       if notify_result == false
