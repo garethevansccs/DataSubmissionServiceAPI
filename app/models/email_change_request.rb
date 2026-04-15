@@ -3,7 +3,6 @@ class EmailChangeRequest < ApplicationRecord
   belongs_to :user
 
   validates :new_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  # validates :token, presence: true, uniqueness: true
   validates :expires_at, presence: true
   validate :new_email_not_taken
   validate :email_not_verified
