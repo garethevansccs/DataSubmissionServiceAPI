@@ -17,11 +17,11 @@ module UrnLists
       uri = URI.parse(ENV.fetch('MDM_API_TOKEN_URL'))
 
       response = Net::HTTP.post_form(uri, {
-        grant_type: 'client_credentials',
+                                       grant_type: 'client_credentials',
         client_id: ENV.fetch('MDM_API_CLIENT_ID'),
         client_secret: ENV.fetch('MDM_API_CLIENT_SECRET'),
         scope: ENV.fetch('MDM_API_SCOPE')
-      })
+                                     })
 
       raise ApiError, "Failed to fetch access token: #{response.code}" unless response.is_a?(Net::HTTPSuccess)
 
@@ -57,9 +57,9 @@ module UrnLists
     end
 
     def validate_rows!(rows)
-      unless rows.is_a?(Array) && rows.all? { |row| row.is_a?(Hash) }
-        raise ApiError, "Invalid URN list format: expected an array of objects"
-      end
+      return if rows.is_a?(Array) && rows.all? { |row| row.is_a?(Hash) }
+
+      raise ApiError, 'Invalid URN list format: expected an array of objects'
     end
   end
 end

@@ -17,9 +17,9 @@ RSpec.describe UrnLists::ImportCustomers do
       end
 
       it 'upserts the customers' do
-        expect {
+        expect do
           described_class.new(rows: rows).call
-        }.to change(Customer, :count).by(1)
+        end.to change(Customer, :count).by(1)
       end
     end
 
@@ -37,9 +37,9 @@ RSpec.describe UrnLists::ImportCustomers do
       end
 
       it 'builds and upserts the customers' do
-        expect {
+        expect do
           described_class.new(rows: rows).call
-        }.to change(Customer, :count).by(1)
+        end.to change(Customer, :count).by(1)
 
         customer = Customer.last
 
@@ -54,9 +54,9 @@ RSpec.describe UrnLists::ImportCustomers do
       it 'updates an existing customer' do
         existing_customer = create(:customer, urn: 10009655, name: 'Old Name', deleted: true)
 
-        expect {
+        expect do
           described_class.new(rows: rows).call
-        }.not_to change(Customer, :count)
+        end.not_to change(Customer, :count)
 
         existing_customer.reload
 
@@ -68,13 +68,13 @@ RSpec.describe UrnLists::ImportCustomers do
         obsolete = create(:customer, urn: 10009656, name: 'Obsolete Customer', deleted: false)
 
         rows = [
-            {
-                'URN' => '10009655',
-                'CustomerName' => 'Government Commercial Agency',
-                'PostCode' => 'L3 9PP',
-                'Sector' => 'Central Government',
-                'Published' => 'True'
-            }
+          {
+            'URN' => '10009655',
+              'CustomerName' => 'Government Commercial Agency',
+              'PostCode' => 'L3 9PP',
+              'Sector' => 'Central Government',
+              'Published' => 'True'
+          }
         ]
 
         described_class.new(rows: rows).call
@@ -82,12 +82,12 @@ RSpec.describe UrnLists::ImportCustomers do
         expect(obsolete.reload.deleted).to eq(true)
       end
 
-      it 'restores a previously deleted customer if it reappears in the list' do    
+      it 'restores a previously deleted customer if it reappears in the list' do
         deleted_customer = create(:customer, urn: 10009655, name: 'Government Commercial Agency', deleted: true)
 
-        expect {
+        expect do
           described_class.new(rows: rows).call
-        }.not_to change(Customer, :count)
+        end.not_to change(Customer, :count)
 
         deleted_customer.reload
 

@@ -30,28 +30,28 @@ RSpec.describe UrnListImporterJob do
 
     let(:downloader) do
       double(
-        'AttachedFileDownloader', 
-        download!: true, 
+        'AttachedFileDownloader',
+        download!: true,
         temp_file: download_tempfile
-        )
+      )
     end
 
     let(:rows) do
       [
         Customer.new(
-          urn: 10009655, 
-          name: 'Crown Commercial Service', 
-          postcode: 'L3 9PP', 
+          urn: 10009655,
+          name: 'Crown Commercial Service',
+          postcode: 'L3 9PP',
           sector: 'central_government',
-          deleted: false, 
+          deleted: false,
           published: true
         ),
         Customer.new(
-          urn: 10009656, 
+          urn: 10009656,
           name: 'Another Organisation',
-          postcode: 'AB1 2CD', 
+          postcode: 'AB1 2CD',
           sector: 'wider_public_sector',
-          deleted: false, 
+          deleted: false,
           published: true
         )
       ]
@@ -68,7 +68,8 @@ RSpec.describe UrnListImporterJob do
       allow(UrnLists::ImportCustomers).to receive(:new)
         .with(rows: rows)
         .and_return(import_customers_service)
-      allow_any_instance_of(described_class).to receive(:build_workbook_temp_file).with(urn_list).and_return(workbook_tempfile)
+      allow_any_instance_of(described_class).to receive(:build_workbook_temp_file)
+        .with(urn_list).and_return(workbook_tempfile)
       allow_any_instance_of(described_class).to receive(:remove_published_column).with(urn_list, workbook_tempfile.path)
       allow_any_instance_of(described_class).to receive(:cleanup_downloader_temp_file)
     end
@@ -76,6 +77,7 @@ RSpec.describe UrnListImporterJob do
     after do
       [download_tempfile, workbook_tempfile].each do |file|
         next if file.closed?
+
         file.close
         file.unlink
       rescue StandardError
@@ -114,9 +116,9 @@ RSpec.describe UrnListImporterJob do
       allow(bad_read_excel).to receive(:call).and_raise(UrnLists::ReadExcel::InvalidFormat)
       allow(UrnLists::ReadExcel).to receive(:new).and_return(bad_read_excel)
 
-      expect {
+      expect do
         described_class.perform_now(urn_list)
-      }.to raise_error(UrnLists::ReadExcel::InvalidFormat)
+      end.to raise_error(UrnLists::ReadExcel::InvalidFormat)
 
       urn_list.reload
       expect(urn_list).to be_failed
@@ -139,9 +141,9 @@ RSpec.describe UrnListImporterJob do
       allow(bad_importer).to receive(:call).and_raise(StandardError.new('Unexpected error'))
       allow(UrnLists::ImportCustomers).to receive(:new).and_return(bad_importer)
 
-      expect {
+      expect do
         described_class.perform_now(urn_list)
-      }.to raise_error(StandardError)
+      end.to raise_error(StandardError)
 
       urn_list.reload
       expect(urn_list).to be_failed

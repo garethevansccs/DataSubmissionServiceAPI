@@ -1,9 +1,9 @@
 class UrnList < ApplicationRecord
   include AASM
 
-  enum :source, { 
-    manual_upload: 'manual_upload', 
-    api_import: 'api_import' 
+  enum :source, {
+    manual_upload: 'manual_upload',
+    api_import: 'api_import'
   }
 
   aasm do

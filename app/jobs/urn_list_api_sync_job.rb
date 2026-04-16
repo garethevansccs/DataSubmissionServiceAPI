@@ -10,7 +10,7 @@ class UrnListApiSyncJob < ApplicationJob
       completed_at: Time.current,
       processed_count: count
     )
-  rescue => e
+  rescue StandardError => e
     urn_list.update!(
       aasm_state: :failed,
       completed_at: Time.current,

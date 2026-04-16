@@ -12,6 +12,7 @@ class UrnListImporterJob < ApplicationJob
 
   retry_on Aws::S3::Errors::ServiceError
 
+  # rubocop:disable Metrics/AbcSize
   def perform(urn_list)
     raise AlreadyImported unless urn_list.pending?
 
@@ -29,18 +30,19 @@ class UrnListImporterJob < ApplicationJob
       completed_at: Time.current,
       processed_count: count
     )
-  rescue Aws::S3::Errors::ServiceError => e
+  rescue Aws::S3::Errors::ServiceError
     raise
-  rescue UrnLists::ReadExcel::InvalidFormat => e
+  rescue UrnLists::ReadExcel::InvalidFormat
     mark_failed!(urn_list)
     raise
-  rescue => e
+  rescue StandardError => e
     mark_failed!(urn_list) if urn_list.persisted? && urn_list.pending?
     raise e
   ensure
     cleanup_downloader_temp_file(downloader&.temp_file)
     cleanup_downloader_temp_file(workbook_temp_file)
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -96,7 +98,7 @@ class UrnListImporterJob < ApplicationJob
 
   def mark_failed!(urn_list, processed_count: 0)
     urn_list.update!(
-      aasm_state: :failed, 
+      aasm_state: :failed,
       completed_at: Time.current,
       processed_count: processed_count
     )

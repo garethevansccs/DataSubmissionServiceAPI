@@ -37,16 +37,16 @@ module UrnLists
       rows = []
 
       CSV.foreach(csv_temp_file, headers: true) do |row|
-      raise InvalidFormat unless (row.headers & REQUIRED_COLUMNS) == REQUIRED_COLUMNS
+        raise InvalidFormat unless (row.headers & REQUIRED_COLUMNS) == REQUIRED_COLUMNS
 
-      rows << Customer.new(
-        name: row['CustomerName'],
-        urn: row['URN'].to_i,
-        postcode: row['PostCode'],
-        sector: (row['Sector'] == 'Central Government' ? :central_government : :wider_public_sector),
-        deleted: false,
-        published: (row['Published'] == 'False' ? false : true)
-      )
+        rows << Customer.new(
+          name: row['CustomerName'],
+          urn: row['URN'].to_i,
+          postcode: row['PostCode'],
+          sector: (row['Sector'] == 'Central Government' ? :central_government : :wider_public_sector),
+          deleted: false,
+          published: (row['Published'] != 'False')
+        )
       end
 
       rows

@@ -37,8 +37,8 @@ module UrnLists
 
     def normalize_published(value)
       return true if value.nil?
-      
-      value == 'False' ? false : true
+
+      value != 'False'
     end
 
     def upsert!(customers)
@@ -60,7 +60,7 @@ module UrnLists
 
       urns_to_be_deleted = existing_urns - importing_urns
 
-      Customer.where(urn: urns_to_be_deleted).update_all(deleted: true)
+      Customer.where(urn: urns_to_be_deleted).update(deleted: true)
     end
   end
 end

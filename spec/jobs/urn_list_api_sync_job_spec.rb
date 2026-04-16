@@ -5,19 +5,19 @@ RSpec.describe UrnListApiSyncJob do
     let(:rows) do
       [
         Customer.new(
-          urn: 10009655, 
-          name: 'Government Commercial Agency', 
-          postcode: 'L3 9PP', 
+          urn: 10009655,
+          name: 'Government Commercial Agency',
+          postcode: 'L3 9PP',
           sector: 'central_government',
-          deleted: false, 
+          deleted: false,
           published: true
         ),
         Customer.new(
-          urn: 10009656, 
+          urn: 10009656,
           name: 'Another Organisation',
-          postcode: 'AB1 2CD', 
+          postcode: 'AB1 2CD',
           sector: 'wider_public_sector',
-          deleted: false, 
+          deleted: false,
           published: true
         )
       ]
@@ -32,9 +32,9 @@ RSpec.describe UrnListApiSyncJob do
     end
 
     it 'creates a pending urn list, imports the rows, and marks it as processed' do
-      expect {
+      expect do
         described_class.perform_now
-      }.to change(UrnList, :count).by(1)
+      end.to change(UrnList, :count).by(1)
 
       expect(api_client_service).to have_received(:fetch_rows)
       expect(import_customers_service).to have_received(:call)
@@ -49,9 +49,9 @@ RSpec.describe UrnListApiSyncJob do
     it 'marks the urn list as failed when the api call fails' do
       allow(api_client_service).to receive(:fetch_rows).and_raise(StandardError.new('token failed'))
 
-      expect {
+      expect do
         described_class.perform_now
-      }.to raise_error(StandardError, 'token failed')
+      end.to raise_error(StandardError, 'token failed')
 
       urn_list = UrnList.last
       expect(urn_list.source).to eq('api_import')
@@ -63,9 +63,9 @@ RSpec.describe UrnListApiSyncJob do
     it 'marks the urn list as failed when the import fails after rows are fetched' do
       allow(import_customers_service).to receive(:call).and_raise(StandardError.new('import failed'))
 
-      expect {
+      expect do
         described_class.perform_now
-      }.to raise_error(StandardError, 'import failed')
+      end.to raise_error(StandardError, 'import failed')
 
       urn_list = UrnList.last
       expect(urn_list.source).to eq('api_import')
