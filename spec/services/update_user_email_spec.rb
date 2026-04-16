@@ -29,7 +29,8 @@ RSpec.describe UpdateUserEmail do
 
       expect do
         described_class.new(user, 'newemail@example.com').call
-      end.to have_enqueued_job(SendConfirmEmailVerificationJob).with(new_email: 'newemail@example.com', person_name: user.name)
+      end.to have_enqueued_job(SendConfirmEmailVerificationJob).with(new_email: 'newemail@example.com',
+                                                                     person_name: user.name)
     end
 
     context 'when Auth0 errors' do
