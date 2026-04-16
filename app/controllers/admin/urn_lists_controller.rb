@@ -10,7 +10,7 @@ class Admin::UrnListsController < AdminController
   end
 
   def create
-    @urn_list = UrnList.new(urn_list_params)
+    @urn_list = UrnList.new(urn_list_params.merge(source: 'manual_upload'))
 
     if @urn_list.save
       UrnListImporterJob.perform_later(@urn_list)
@@ -33,7 +33,7 @@ class Admin::UrnListsController < AdminController
   end
 
   def find_latest_list
-    @latest_urn_list = UrnList.processed.order(created_at: :desc).first
+    @latest_urn_list = UrnList.where(source: 'manual_upload', aasm_state: 'processed').order(created_at: :desc).first
   end
 
   def s3_client
