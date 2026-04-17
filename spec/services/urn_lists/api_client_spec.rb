@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UrnLists::ApiClient do
   describe '#fetch_rows' do
     before do
-      stub_request(:post, ENV.fetch('MDM_API_TOKEN_URL'))
+      stub_request(:post, 'https://login.microsoftonline.com/9f8c0d79-3e87-4cd3-9799-c3443146ea5e/oauth2/v2.0/token')
         .to_return(
           status: 200,
           body: { access_token: 'abc123' }.to_json,
@@ -13,7 +13,7 @@ RSpec.describe UrnLists::ApiClient do
       stub_request(:get, "https://apim.crowncommercial.gov.uk/website-data/manual/paths/invoke/%5Batt%5D.%5Bvw_RMIActiveURNList%5D/?api-version=2016-10-01&filter=Published%20eq%20'True'&sp=/triggers/manual/run&sv=1.0")
         .with(
           headers: {
-            'Accept' => 'application/json',
+          'Accept' => 'application/json',
           'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization' => 'Bearer abc123',
           'User-Agent' => 'Ruby'
