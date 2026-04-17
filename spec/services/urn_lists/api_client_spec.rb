@@ -3,9 +3,18 @@ require 'rails_helper'
 RSpec.describe UrnLists::ApiClient do
   describe '#fetch_rows' do
     before do
-      stub_request(:post, 'https://login.microsoftonline.com/9f8c0d79-3e87-4cd3-9799-c3443146ea5e/oauth2/v2.0/token')
+      stub_request(:post, "https://example.com/oauth/token")
+        .with(
+           body: {"client_id" => "test_client_id", "client_secret" => "test_client_secret", "grant_type" => "client_credentials", "scope" => "test_scope"},
+           headers: {
+       	  'Accept'=>'*/*',
+       	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       	  'Content-Type'=>'application/x-www-form-urlencoded',
+       	  'Host'=>'example.com',
+       	  'User-Agent'=>'Ruby'
+           })
         .to_return(
-          status: 200,
+          status: 200, 
           body: { access_token: 'abc123' }.to_json,
           headers: { 'Content-Type' => 'application/json' }
         )
@@ -32,6 +41,12 @@ RSpec.describe UrnLists::ApiClient do
           ].to_json,
           headers: { 'Content-Type' => 'application/json' }
         )
+
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with('MDM_API_TOKEN_URL').and_return('https://example.com/oauth/token')
+        allow(ENV).to receive(:fetch).with('MDM_API_CLIENT_ID').and_return('test_client_id')
+        allow(ENV).to receive(:fetch).with('MDM_API_CLIENT_SECRET').and_return('test_client_secret')
+        allow(ENV).to receive(:fetch).with('MDM_API_SCOPE').and_return('test_scope')
     end
 
     it 'fetches and returns customer data' do
