@@ -30,5 +30,6 @@
               %td.govuk-table__cell= list.excel_file.filename || '-'
               %td.govuk-table__cell= list.created_at
               %td.govuk-table__cell= list.aasm_state
+      = paginate @urn_lists
 
 

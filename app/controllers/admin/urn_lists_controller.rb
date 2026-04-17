@@ -2,7 +2,7 @@ class Admin::UrnListsController < AdminController
   before_action :find_latest_list, only: %i[index download]
 
   def index
-    @urn_lists = UrnList.order(created_at: :desc).all
+    @urn_lists = UrnList.order(created_at: :desc).page(params[:page])
   end
 
   def new
