@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_10_20_131706) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_13_130608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -289,9 +289,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_20_131706) do
 
   create_table "urn_lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "aasm_state"
+    t.datetime "completed_at"
     t.datetime "created_at", precision: nil, null: false
+    t.integer "processed_count"
+    t.string "source", default: "manual_upload", null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["aasm_state"], name: "index_urn_lists_on_aasm_state"
+    t.index ["completed_at"], name: "index_urn_lists_on_completed_at"
+    t.index ["source"], name: "index_urn_lists_on_source"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
