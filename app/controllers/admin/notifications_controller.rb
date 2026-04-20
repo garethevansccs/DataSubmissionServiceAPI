@@ -3,7 +3,7 @@ require 'custom_markdown_renderer'
 class Admin::NotificationsController < AdminController
   def index
     markdown_parser = Redcarpet::Markdown.new(CustomMarkdownRenderer)
-    @published_notification = Notification.published.first
+    @published_notification = Notification.currently_active.first
     if @published_notification
       @published_notification_message = markdown_parser.render(@published_notification[:notification_message])
     end
@@ -62,6 +62,14 @@ class Admin::NotificationsController < AdminController
                      user: current_user['email'],
                      published: true,
                      published_at: Time.zone.now,
-                     stop_datetime: notification_params[:stop_datetime])
+                     stop_datetime: parsed_stop_datetime)
+  end
+
+  def parsed_stop_datetime
+    return nil if notification_params[:stop_datetime].blank?
+
+    Time.use_zone('Europe/London') do
+      Time.zone.parse(notification_params[:stop_datetime])
+    end
   end
 end

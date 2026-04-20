@@ -27,9 +27,10 @@
                 = @notification.errors[:stop_datetime].join(', ')
 
             - current_date = @notification.stop_datetime || @published_notification&.stop_datetime
+            - current_date_london = current_date&.in_time_zone('Europe/London')
             = form.datetime_local_field :stop_datetime, 
               class: "govuk-input", 
-              value: current_date&.strftime("%Y-%m-%dT%H:%M")
+              value: current_date_london&.strftime("%Y-%m-%dT%H:%M")
           %button.govuk-button.govuk-button--secondary{ type: "button", onclick: "document.getElementById('notification_stop_datetime').value = ''", class: "govuk-!-margin-top-1" }
             Clear date
 
