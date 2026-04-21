@@ -161,10 +161,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_13_130608) do
     t.text "notification_message"
     t.boolean "published", default: false
     t.datetime "published_at"
+    t.datetime "stop_datetime", precision: nil
     t.text "summary", null: false
     t.datetime "unpublished_at"
     t.string "user"
     t.index ["published"], name: "index_notifications_on_published"
+    t.index ["stop_datetime"], name: "index_notifications_on_stop_datetime"
   end
 
   create_table "release_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
