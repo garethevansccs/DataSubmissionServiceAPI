@@ -3,7 +3,9 @@ class V2::TasksController < ActionController::API
 
   def index
     @tasks = Task.all
-    @tasks = @tasks.where(updated_at: Time.zone.parse(params[:updated_at])..Time.zone.now) if params[:updated_at].present?
+    if params[:updated_at].present?
+      @tasks = @tasks.where(updated_at: Time.zone.parse(params[:updated_at])..Time.zone.now)
+    end
 
     render json: @tasks
   rescue ArgumentError
