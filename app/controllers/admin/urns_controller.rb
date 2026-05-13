@@ -8,7 +8,7 @@ class Admin::UrnsController < AdminController
   end
 
   def download
-    send_data urn_csv, 
+    send_data urn_csv,
               type: 'text/csv',
               disposition: 'attachment',
               filename: "customer_urns_#{Time.zone.today}.csv"

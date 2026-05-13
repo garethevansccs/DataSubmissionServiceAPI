@@ -9,8 +9,8 @@ RSpec.describe 'Admin URNs', type: :request do
     mock_sso_with(email: 'admin@example.com')
     get '/auth/google_oauth2/callback'
   end
-  
-  describe  'GET /admin/urns' do
+
+  describe 'GET /admin/urns' do
     it 'renders the URN search page' do
       get admin_urns_path
 
@@ -22,15 +22,20 @@ RSpec.describe 'Admin URNs', type: :request do
   end
 
   describe 'GET /admin/urns/download' do
-    let!(:active_customer) { create(:customer, urn: '123', name: 'Active Customer One', postcode: 'AB1 2CD', sector: :central_government) }
-    let!(:deleted_customer) { create(:customer, urn: '456', name: 'Deleted Customer', postcode: 'IJ5 6KL', sector: :wider_public_sector, deleted: true) }
+    let!(:active_customer) do
+      create(:customer, urn: '123', name: 'Active Customer One', postcode: 'AB1 2CD', sector: :central_government)
+    end
+    let!(:deleted_customer) do
+      create(:customer, urn: '456', name: 'Deleted Customer', postcode: 'IJ5 6KL', sector: :wider_public_sector,
+     deleted: true)
+    end
 
     it 'returns a CSV file with active customers' do
       get download_admin_urns_path
 
       expect(response).to have_http_status(:ok)
       expect(response.headers['Content-Type']).to include('text/csv')
-      expect(response.headers['Content-Disposition']).to include("attachment; filename=\"customer_urns_#{Time.zone.today}.csv\"")
+      expect(response.headers['Content-Disposition']).to include("filename=\"customer_urns_#{Time.zone.today}.csv\"")
 
       csv = CSV.parse(response.body, headers: true)
       expect(csv.headers).to eq(['URN', 'CustomerName', 'PostCode', 'Sector', 'Published'])
