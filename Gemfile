@@ -71,7 +71,7 @@ gem 'rubocop-rails', '~> 2.34', '>= 2.34.0'
 
 gem 'progress_bar', require: false
 
-gem 'sidekiq-pro', source: 'https://gems.contribsys.com/'
+gem 'sidekiq-pro', '~> 0.0.3'
 # gem 'sidekiq', '>=5.2.10' # Free version, use for local image building
 gem 'sidekiq-cron', '>= 2.3.1'
 
