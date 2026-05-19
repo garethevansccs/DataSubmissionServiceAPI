@@ -4,8 +4,8 @@
 # It also improves build times by caching the base stage.
 
 # Base stage
-ARG BASE_IMAGE=3.4.8-alpine
-#4.0.4-alpine
+ARG BASE_IMAGE=4.0.4-alpine
+#3.4.8-alpine
 
 # Base stage
 FROM ruby:$BASE_IMAGE AS base
