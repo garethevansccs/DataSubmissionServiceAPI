@@ -71,6 +71,10 @@ gem 'rubocop-rails', '~> 2.34', '>= 2.34.0'
 
 gem 'progress_bar', require: false
 
+gem 'sidekiq-pro', source: 'https://gems.contribsys.com/'
+# gem 'sidekiq', '>=5.2.10' # Free version, use for local image building
+gem 'sidekiq-cron', '>= 2.3.1'
+
 # Alpine and Windows do not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby ruby]
 

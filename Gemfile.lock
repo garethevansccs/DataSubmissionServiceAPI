@@ -1,6 +1,8 @@
 GEM
   remote: https://gems.contribsys.com/
   specs:
+    sidekiq-pro (8.0.2)
+      sidekiq (>= 8.0.0, < 9)
 
 GEM
   remote: https://rubygems.org/
