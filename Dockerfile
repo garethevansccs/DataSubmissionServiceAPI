@@ -45,7 +45,7 @@ RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VER
 
 RUN ln -s /usr/bin/nodejs /usr/local/bin/node
 
-ENV INSTALL_PATH /srv/dss-api
+ENV INSTALL_PATH=/srv/dss-api
 RUN mkdir -p $INSTALL_PATH
 
 WORKDIR $INSTALL_PATH
@@ -79,8 +79,8 @@ COPY . $INSTALL_PATH
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist SECRET_KEY_BASE=dummy --quiet assets:precompile
 
 # Runtime stage
-FROM ruby:3.4.8-alpine
-ENV INSTALL_PATH /srv/dss-api
+FROM ruby:$BASE_IMAGE
+ENV INSTALL_PATH=/srv/dss-api
 RUN mkdir -p $INSTALL_PATH
 
 WORKDIR $INSTALL_PATH
