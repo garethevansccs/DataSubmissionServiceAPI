@@ -4,7 +4,16 @@
 # It also improves build times by caching the base stage.
 
 # Base stage
-FROM ruby:3.4.8-alpine AS base
+ARG BASE_IMAGE=3.4.8-alpine
+#4.0.4-alpine
+
+# Base stage
+FROM ruby:$BASE_IMAGE AS base
+
+ARG YARN_VERSION
+ENV PYTHON_VERSION=3.8.12
+ARG INSTALL_PATH
+
 RUN apk add build-base bzip2-dev curl libc-utils libffi-dev libpq-dev nodejs tzdata yaml-dev xz-dev zlib-dev && rm -rf /var/cache/apk/*
 
 # Set locale and timezone
@@ -12,8 +21,7 @@ RUN echo "Europe/London" > /etc/timezone
 RUN echo 'export LC_ALL=en_GB.UTF-8' >> /etc/profile.d/locale.sh && \
   sed -i 's|LANG=C.UTF-8|LANG=en_GB.UTF-8|' /etc/profile.d/locale.sh
 
-RUN YARN_VERSION=1.17.3 \
-  set -ex \
+RUN set -ex \
   && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
   && mkdir -p /opt/yarn \
   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/yarn --strip-components=1 \
@@ -23,7 +31,7 @@ RUN YARN_VERSION=1.17.3 \
 
 COPY requirements.txt $INSTALL_PATH/requirements.txt
 # This should be kept in sync with the version specified in runtime.txt
-ENV PYTHON_VERSION 3.8.12
+
 RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz \
     && tar -xf Python-${PYTHON_VERSION}.tgz \
     && cd Python-${PYTHON_VERSION} \
